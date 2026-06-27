@@ -1,5 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs"]
+
+[phases.install]
+cmds = ["npm install --ignore-scripts"]
+
 [phases.build]
-cmds = ["npm install"]
+cmds = ["echo 'skip frontend build'"]
 
 [start]
 cmd = "node server.cjs"
