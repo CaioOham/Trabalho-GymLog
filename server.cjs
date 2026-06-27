@@ -93,7 +93,14 @@ app.post('/api/profile/update', (req, res) => {
   console.log('[PROFILE] Perfil atualizado');
   res.json({ success: true });
 });
+app.get('/', (req, res) => {
+  res.json({ status: 'GymLog API funcionando!', version: '1.0' });
+});
 
+app.get('/api/workouts/read', (req, res) => {
+  const db = loadDB();
+  res.json(db.workouts);
+});
 app.listen(PORT, () => {
   console.log(`Servidor GymLog rodando na porta ${PORT}`);
   loadDB();
