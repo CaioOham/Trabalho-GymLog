@@ -1,224 +1,101 @@
 const express = require('express');
 const cors = require('cors');
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Configuração do CORS para permitir requisições do frontend Vite
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
-
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Inicialização do Banco de Dados SQLite
-const dbPath = process.env.DATABASE_PATH || path.join(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados SQLite:', err.message);
-  } else {
-    console.log('Conectado ao banco de dados SQLite em:', dbPath);
-    createTable();
-  }
-});
+// Banco de dados em arquivo JSON
+const DB_PATH = path.join(__dirname, 'db.json');
 
-function createTable() {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS workouts (
-      rowNumber INTEGER PRIMARY KEY AUTOINCREMENT,
-      exercise TEXT NOT NULL,
-      sets INTEGER NOT NULL,
-      reps INTEGER NOT NULL,
-      weight REAL NOT NULL,
-      date TEXT NOT NULL,
-      notes TEXT
-    )
-  `, (err) => {
-    if (err) {
-      console.error('Erro ao criar tabela "workouts":', err.message);
-    } else {
-      console.log('Tabela "workouts" verificada/criada com sucesso.');
+function loadDB() {
+  try {
+    if (!fs.existsSync(DB_PATH)) {
+      fs.writeFileSync(DB_PATH, JSON.stringify({ workouts: [], profile: { id: 1, name: 'João Silva', email: 'joao@email.com', age: 24, weight: 78, height: 178, goal: 'Hipertrofia', memberSince: 'junho de 2025' }, nextId: 1 }));
     }
-  });
-
-  db.run(`
-    CREATE TABLE IF NOT EXISTS profile (
-      id INTEGER PRIMARY KEY DEFAULT 1,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL,
-      age INTEGER,
-      weight REAL,
-      height REAL,
-      goal TEXT,
-      memberSince TEXT DEFAULT 'junho de 2025'
-    )
-  `, (err) => {
-    if (err) {
-      console.error('Erro ao criar tabela "profile":', err.message);
-    } else {
-      console.log('Tabela "profile" verificada/criada com sucesso.');
-      // Insere o perfil padrão se não existir nenhum
-      db.run(`
-        INSERT OR IGNORE INTO profile (id, name, email, age, weight, height, goal, memberSince)
-        VALUES (1, 'João Silva', 'joao@email.com', 24, 78, 178, 'Hipertrofia', 'junho de 2025')
-      `, (insertErr) => {
-        if (insertErr) {
-          console.error('Erro ao inserir perfil padrão:', insertErr.message);
-        } else {
-          console.log('Perfil padrão verificado/inserido.');
-        }
-      });
-    }
-  });
+    return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+  } catch { return { workouts: [], profile: { id: 1, name: 'João Silva', email: 'joao@email.com', age: 24, weight: 78, height: 178, goal: 'Hipertrofia', memberSince: 'junho de 2025' }, nextId: 1 }; }
 }
 
-// Endpoint: READ (POST)
+function saveDB(data) {
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+}
+
+// READ
 app.post('/api/workouts/read', (req, res) => {
-  const query = `
-    SELECT rowNumber, exercise, sets, reps, weight, date, notes 
-    FROM workouts 
-    ORDER BY rowNumber ASC
-  `;
-  
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      console.error('Erro ao ler treinos:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    
-    // Mapeamento para o formato esperado pelo frontend do Figma/Make
-    const mapped = rows.map(r => ({
-      RowNumber: r.rowNumber,
-      Exercicio: r.exercise,
-      Series: r.sets,
-      Repeticoes: r.reps,
-      Carga: r.weight,
-      Data: r.date,
-      Observacao: r.notes || ''
-    }));
-    
-    console.log(`[READ] Retornando ${mapped.length} treinos.`);
-    res.json(mapped);
-  });
+  const db = loadDB();
+  const mapped = db.workouts.map(w => ({
+    RowNumber: w.rowNumber,
+    Exercicio: w.exercise,
+    Series: w.sets,
+    Repeticoes: w.reps,
+    Carga: w.weight,
+    Data: w.date,
+    Observacao: w.notes || ''
+  }));
+  console.log(`[READ] ${mapped.length} treinos`);
+  res.json(mapped);
 });
 
-// Endpoint: CREATE (POST)
+// CREATE
 app.post('/api/workouts/create', (req, res) => {
   const { Exercicio, Series, Repeticoes, Carga, Data, Observacao } = req.body;
-  
-  if (!Exercicio || Series === undefined || Repeticoes === undefined || Carga === undefined || !Data) {
-    return res.status(400).json({ error: 'Campos obrigatórios ausentes.' });
-  }
-
-  const query = `
-    INSERT INTO workouts (exercise, sets, reps, weight, date, notes) 
-    VALUES (?, ?, ?, ?, ?, ?)
-  `;
-  
-  db.run(query, [Exercicio, Series, Repeticoes, Carga, Data, Observacao || ''], function(err) {
-    if (err) {
-      console.error('Erro ao criar treino:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    
-    console.log(`[CREATE] Novo treino inserido com RowNumber (ID): ${this.lastID}`);
-    res.json({ success: true, RowNumber: this.lastID });
-  });
+  if (!Exercicio || !Data) return res.status(400).json({ error: 'Campos obrigatórios ausentes.' });
+  const db = loadDB();
+  const newWorkout = { rowNumber: db.nextId++, exercise: Exercicio, sets: Series, reps: Repeticoes, weight: Carga, date: Data, notes: Observacao || '' };
+  db.workouts.push(newWorkout);
+  saveDB(db);
+  console.log(`[CREATE] Treino ${newWorkout.rowNumber} criado`);
+  res.json({ success: true, RowNumber: newWorkout.rowNumber });
 });
 
-// Endpoint: UPDATE (POST)
+// UPDATE
 app.post('/api/workouts/update', (req, res) => {
   const { RowNumber, Exercicio, Series, Repeticoes, Carga, Data, Observacao } = req.body;
-  
-  if (!RowNumber || !Exercicio || Series === undefined || Repeticoes === undefined || Carga === undefined || !Data) {
-    return res.status(400).json({ error: 'Campos obrigatórios ausentes para atualização.' });
-  }
-
-  const query = `
-    UPDATE workouts 
-    SET exercise = ?, sets = ?, reps = ?, weight = ?, date = ?, notes = ? 
-    WHERE rowNumber = ?
-  `;
-  
-  db.run(query, [Exercicio, Series, Repeticoes, Carga, Data, Observacao || '', RowNumber], function(err) {
-    if (err) {
-      console.error('Erro ao atualizar treino:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    
-    console.log(`[UPDATE] Treino RowNumber ${RowNumber} atualizado. Modificações: ${this.changes}`);
-    res.json({ success: true, changes: this.changes });
-  });
+  if (!RowNumber) return res.status(400).json({ error: 'RowNumber obrigatório.' });
+  const db = loadDB();
+  const idx = db.workouts.findIndex(w => w.rowNumber === Number(RowNumber));
+  if (idx === -1) return res.status(404).json({ error: 'Treino não encontrado.' });
+  db.workouts[idx] = { rowNumber: Number(RowNumber), exercise: Exercicio, sets: Series, reps: Repeticoes, weight: Carga, date: Data, notes: Observacao || '' };
+  saveDB(db);
+  console.log(`[UPDATE] Treino ${RowNumber} atualizado`);
+  res.json({ success: true });
 });
 
-// Endpoint: DELETE (POST)
+// DELETE
 app.post('/api/workouts/delete', (req, res) => {
   const { RowNumber } = req.body;
-  
-  if (!RowNumber) {
-    return res.status(400).json({ error: 'RowNumber é obrigatório para exclusão.' });
-  }
-
-  const query = `
-    DELETE FROM workouts 
-    WHERE rowNumber = ?
-  `;
-  
-  db.run(query, [RowNumber], function(err) {
-    if (err) {
-      console.error('Erro ao excluir treino:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    
-    console.log(`[DELETE] Treino RowNumber ${RowNumber} excluído. Modificações: ${this.changes}`);
-    res.json({ success: true, changes: this.changes });
-  });
+  if (!RowNumber) return res.status(400).json({ error: 'RowNumber obrigatório.' });
+  const db = loadDB();
+  db.workouts = db.workouts.filter(w => w.rowNumber !== Number(RowNumber));
+  saveDB(db);
+  console.log(`[DELETE] Treino ${RowNumber} removido`);
+  res.json({ success: true });
 });
 
-// Endpoint: PROFILE GET (GET)
+// PROFILE GET
 app.get('/api/profile', (req, res) => {
-  db.get("SELECT name, email, age, weight, height, goal, memberSince FROM profile WHERE id = 1", [], (err, row) => {
-    if (err) {
-      console.error('Erro ao obter perfil:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(row);
-  });
+  const db = loadDB();
+  res.json(db.profile);
 });
 
-// Endpoint: PROFILE UPDATE (POST)
+// PROFILE UPDATE
 app.post('/api/profile/update', (req, res) => {
   const { name, email, age, weight, height, goal } = req.body;
-  if (!name || !email) {
-    return res.status(400).json({ error: 'Nome e E-mail são obrigatórios.' });
-  }
-
-  const query = `
-    UPDATE profile 
-    SET name = ?, email = ?, age = ?, weight = ?, height = ?, goal = ? 
-    WHERE id = 1
-  `;
-  
-  db.run(query, [
-    name, 
-    email, 
-    age ? parseInt(age) : null, 
-    weight ? parseFloat(weight) : null, 
-    height ? parseInt(height) : null, 
-    goal || ''
-  ], function(err) {
-    if (err) {
-      console.error('Erro ao atualizar perfil:', err.message);
-      return res.status(500).json({ error: err.message });
-    }
-    console.log(`[PROFILE] Perfil atualizado.`);
-    res.json({ success: true });
-  });
+  if (!name || !email) return res.status(400).json({ error: 'Nome e E-mail obrigatórios.' });
+  const db = loadDB();
+  db.profile = { ...db.profile, name, email, age: age || null, weight: weight || null, height: height || null, goal: goal || '' };
+  saveDB(db);
+  console.log('[PROFILE] Perfil atualizado');
+  res.json({ success: true });
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor backend rodando com SQLite na porta ${PORT}`);
+  console.log(`Servidor GymLog rodando na porta ${PORT}`);
+  loadDB();
+  console.log('Banco de dados JSON inicializado!');
 });
