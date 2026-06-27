@@ -12,10 +12,10 @@ export interface Workout {
 }
 
 const URLS = {
-  CREATE: 'http://localhost:3001/api/workouts/create',
-  READ:   'http://localhost:3001/api/workouts/read',
-  UPDATE: 'http://localhost:3001/api/workouts/update',
-  DELETE: 'http://localhost:3001/api/workouts/delete',
+  CREATE: 'https://trabalho-gymlog-production.up.railway.app/api/workouts/create',
+  READ:   'https://trabalho-gymlog-production.up.railway.app/api/workouts/read',
+  UPDATE: 'https://trabalho-gymlog-production.up.railway.app/api/workouts/update',
+  DELETE: 'https://trabalho-gymlog-production.up.railway.app/api/workouts/delete',
 };
 
 async function postJson<T = unknown>(url: string, body?: object): Promise<T> {
