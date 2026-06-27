@@ -1,0 +1,311 @@
+
+<style>
+  .phone {
+    width: 160px;
+    min-height: 320px;
+    background: #1E1E2E;
+    border-radius: 24px;
+    border: 2.5px solid #3a3a5c;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    flex-shrink: 0;
+  }
+  .status-bar {
+    background: #16162a;
+    padding: 6px 12px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .status-bar span { color: #aaa; font-size: 9px; }
+  .screen-content { flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .screen-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #aaa;
+    text-align: center;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+  .btn-primary {
+    background: #6C63FF;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid #6C63FF;
+    color: #6C63FF;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 11px;
+  }
+  .btn-danger {
+    background: transparent;
+    border: 1px solid #E24B4A;
+    color: #E24B4A;
+    border-radius: 8px;
+    padding: 6px 0;
+    text-align: center;
+    font-size: 10px;
+  }
+  .app-title { color: #6C63FF; font-size: 15px; font-weight: 500; text-align: center; margin: 6px 0 2px; }
+  .app-sub { color: #888; font-size: 9px; text-align: center; }
+  .tag { background: #6C63FF22; color: #a09bff; font-size: 8px; padding: 2px 7px; border-radius: 99px; display: inline-block; margin-bottom: 4px; }
+  .input-mock {
+    background: #2a2a42;
+    border: 1px solid #3a3a5c;
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: #fff;
+    font-size: 9px;
+  }
+  .input-label { color: #888; font-size: 8px; margin-bottom: 1px; }
+  .list-item {
+    background: #2a2a42;
+    border-radius: 8px;
+    padding: 7px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .list-item-title { color: #fff; font-size: 10px; font-weight: 500; }
+  .list-item-sub { color: #888; font-size: 8px; }
+  .list-item-actions { display: flex; gap: 4px; margin-top: 4px; }
+  .act-btn { flex: 1; text-align: center; font-size: 8px; padding: 3px 0; border-radius: 4px; }
+  .act-edit { background: #6C63FF22; color: #a09bff; }
+  .act-del { background: #E24B4A22; color: #E24B4A; }
+  .accent { color: #00D4AA; font-size: 9px; }
+  .divider { border: none; border-top: 1px solid #2a2a42; margin: 2px 0; }
+  .nav-bar {
+    background: #16162a;
+    border-top: 1px solid #2a2a42;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .nav-icon { color: #555; font-size: 14px; }
+  .nav-icon.active { color: #6C63FF; }
+  .logo-circle {
+    width: 44px; height: 44px;
+    background: #6C63FF22;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 4px;
+  }
+  .screens-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1.5rem 0;
+  }
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .badge-tela {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 99px;
+    padding: 2px 12px;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 1px; }
+  .screen-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .screen-header-title { color: #fff; font-size: 12px; font-weight: 500; }
+  .screen-header-back { color: #6C63FF; font-size: 10px; }
+  .stat-row { display: flex; gap: 5px; }
+  .stat-card {
+    flex: 1;
+    background: #2a2a42;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: center;
+  }
+  .stat-val { color: #00D4AA; font-size: 12px; font-weight: 500; }
+  .stat-lbl { color: #888; font-size: 7px; }
+</style>
+
+<h2 class="sr-only">Telas de exemplo do app GymLog: Home, Listagem, Cadastro e Edição</h2>
+
+<div class="screens-row">
+
+  <div class="phone-wrap">
+    <span class="badge-tela">🏠 Home</span>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>●●●</span></div>
+      <div class="screen-content">
+        <div style="height:12px"></div>
+        <div class="logo-circle">
+          <i class="ti ti-barbell" style="font-size:22px; color:#6C63FF;" aria-hidden="true"></i>
+        </div>
+        <div class="app-title">GymLog</div>
+        <div class="app-sub">Seu diário de treinos</div>
+        <div style="height:8px"></div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-val">12</div><div class="stat-lbl">Treinos</div></div>
+          <div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Exercícios</div></div>
+        </div>
+        <div style="height:4px"></div>
+        <div class="btn-primary">+ Novo Treino</div>
+        <div class="btn-secondary">Ver Meus Treinos</div>
+      </div>
+      <div class="nav-bar">
+        <i class="ti ti-home nav-icon active" aria-hidden="true"></i>
+        <i class="ti ti-list nav-icon" aria-hidden="true"></i>
+        <i class="ti ti-user nav-icon" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <span class="badge-tela">📋 Listagem</span>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>●●●</span></div>
+      <div class="screen-content">
+        <div class="screen-header">
+          <span class="screen-header-title">Meus Treinos</span>
+          <span style="background:#6C63FF; color:#fff; font-size:8px; padding:2px 7px; border-radius:99px;">+ Novo</span>
+        </div>
+        <div class="list-item">
+          <div class="list-item-title">Supino Reto</div>
+          <div class="list-item-sub">4x12 · 80kg · 15/06/2025</div>
+          <div class="list-item-actions">
+            <div class="act-btn act-edit"><i class="ti ti-edit" style="font-size:9px" aria-hidden="true"></i> Editar</div>
+            <div class="act-btn act-del"><i class="ti ti-trash" style="font-size:9px" aria-hidden="true"></i> Excluir</div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-title">Agachamento</div>
+          <div class="list-item-sub">5x10 · 100kg · 14/06/2025</div>
+          <div class="list-item-actions">
+            <div class="act-btn act-edit"><i class="ti ti-edit" style="font-size:9px" aria-hidden="true"></i> Editar</div>
+            <div class="act-btn act-del"><i class="ti ti-trash" style="font-size:9px" aria-hidden="true"></i> Excluir</div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-title">Remada Curvada</div>
+          <div class="list-item-sub">4x10 · 70kg · 13/06/2025</div>
+          <div class="list-item-actions">
+            <div class="act-btn act-edit"><i class="ti ti-edit" style="font-size:9px" aria-hidden="true"></i> Editar</div>
+            <div class="act-btn act-del"><i class="ti ti-trash" style="font-size:9px" aria-hidden="true"></i> Excluir</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+        <i class="ti ti-list nav-icon active" aria-hidden="true"></i>
+        <i class="ti ti-user nav-icon" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <span class="badge-tela">➕ Cadastro</span>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>●●●</span></div>
+      <div class="screen-content">
+        <div class="screen-header">
+          <span class="screen-header-back">← Voltar</span>
+          <span class="screen-header-title">Novo Treino</span>
+          <span style="width:28px"></span>
+        </div>
+        <div class="field-group">
+          <div class="input-label">Exercício</div>
+          <div class="input-mock">Ex: Supino Reto</div>
+        </div>
+        <div style="display:flex; gap:5px;">
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Séries</div>
+            <div class="input-mock">4</div>
+          </div>
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Reps</div>
+            <div class="input-mock">12</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:5px;">
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Carga (kg)</div>
+            <div class="input-mock">80</div>
+          </div>
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Data</div>
+            <div class="input-mock">16/06</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="input-label">Observação</div>
+          <div class="input-mock" style="height:28px">Aumentar carga...</div>
+        </div>
+        <div class="btn-primary" style="margin-top:4px">Salvar Treino</div>
+      </div>
+      <div class="nav-bar">
+        <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+        <i class="ti ti-list nav-icon active" aria-hidden="true"></i>
+        <i class="ti ti-user nav-icon" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <span class="badge-tela">✏️ Edição</span>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>●●●</span></div>
+      <div class="screen-content">
+        <div class="screen-header">
+          <span class="screen-header-back">← Voltar</span>
+          <span class="screen-header-title">Editar Treino</span>
+          <span style="width:28px"></span>
+        </div>
+        <div class="tag">Editando registro #1</div>
+        <div class="field-group">
+          <div class="input-label">Exercício</div>
+          <div class="input-mock" style="color:#6C63FF">Supino Reto</div>
+        </div>
+        <div style="display:flex; gap:5px;">
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Séries</div>
+            <div class="input-mock" style="color:#6C63FF">4</div>
+          </div>
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Reps</div>
+            <div class="input-mock" style="color:#6C63FF">12</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:5px;">
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Carga (kg)</div>
+            <div class="input-mock" style="color:#6C63FF">80</div>
+          </div>
+          <div class="field-group" style="flex:1">
+            <div class="input-label">Data</div>
+            <div class="input-mock" style="color:#6C63FF">15/06</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="input-label">Observação</div>
+          <div class="input-mock" style="height:24px; color:#6C63FF">Aumentar carga...</div>
+        </div>
+        <div class="btn-primary" style="margin-top:2px">Salvar Alterações</div>
+        <div class="btn-danger">Excluir Registro</div>
+      </div>
+      <div class="nav-bar">
+        <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+        <i class="ti ti-list nav-icon active" aria-hidden="true"></i>
+        <i class="ti ti-user nav-icon" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+</div>

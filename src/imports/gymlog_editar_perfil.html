@@ -1,0 +1,94 @@
+
+<style>
+  .phone { width: 390px; background: #1E1E2E; border-radius: 44px; border: 8px solid #2a2a3e; overflow: hidden; font-family: var(--font-sans); margin: 0 auto; }
+  .status { background: #16162a; padding: 12px 20px 8px; display: flex; justify-content: space-between; }
+  .status span { color: #888; font-size: 11px; }
+  .screen { padding: 20px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .back { color: #6C63FF; font-size: 13px; }
+  .page-title { color: #fff; font-size: 16px; font-weight: 500; }
+  .avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 0; }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; background: #6C63FF33; border: 2px solid #6C63FF; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #6C63FF; font-weight: 500; }
+  .avatar-change { color: #6C63FF; font-size: 12px; }
+  .field-group { display: flex; flex-direction: column; gap: 4px; }
+  .field-label { color: #888; font-size: 11px; }
+  .field-input { background: #2a2a42; border: 1px solid #3a3a5c; border-radius: 10px; padding: 13px 14px; color: #fff; font-size: 13px; }
+  .field-input.filled { color: #fff; }
+  .field-input.placeholder { color: #555; }
+  .divider { border: none; border-top: 1px solid #2a2a3e; margin: 2px 0; }
+  .section-title { color: #888; font-size: 11px; letter-spacing: 0.5px; }
+  .btn-save { background: #6C63FF; border-radius: 10px; padding: 14px; text-align: center; color: #fff; font-size: 14px; font-weight: 500; margin-top: 4px; }
+  .btn-danger { background: transparent; border: 1px solid #E24B4A; border-radius: 10px; padding: 13px; text-align: center; color: #E24B4A; font-size: 13px; }
+  .nav { background: #16162a; border-top: 1px solid #2a2a3e; padding: 10px 0 14px; display: flex; justify-content: space-around; margin-top: 16px; }
+  .nav-icon { color: #555; font-size: 22px; }
+  .nav-icon.active { color: #6C63FF; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 .field-group { flex: 1; }
+</style>
+
+<div class="phone">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="screen">
+    <div class="top-bar">
+      <span class="back"><i class="ti ti-arrow-left" style="font-size:14px;vertical-align:-2px" aria-hidden="true"></i> Voltar</span>
+      <span class="page-title">Editar Perfil</span>
+      <span style="width:48px"></span>
+    </div>
+
+    <div class="avatar-wrap">
+      <div class="avatar">JS</div>
+      <span class="avatar-change"><i class="ti ti-camera" style="font-size:12px;vertical-align:-1px" aria-hidden="true"></i> Alterar foto</span>
+    </div>
+
+    <div class="section-title">INFORMAÇÕES PESSOAIS</div>
+
+    <div class="field-group">
+      <div class="field-label">Nome completo</div>
+      <div class="field-input filled">João Silva</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">E-mail</div>
+      <div class="field-input filled">joao@email.com</div>
+    </div>
+
+    <div class="row2">
+      <div class="field-group">
+        <div class="field-label">Idade</div>
+        <div class="field-input filled">24</div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Peso (kg)</div>
+        <div class="field-input filled">78</div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="field-group">
+        <div class="field-label">Altura (cm)</div>
+        <div class="field-input filled">178</div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Objetivo</div>
+        <div class="field-input placeholder">Hipertrofia</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">SEGURANÇA</div>
+
+    <div class="field-group">
+      <div class="field-label">Nova senha</div>
+      <div class="field-input placeholder">••••••••</div>
+    </div>
+
+    <div class="btn-save">Salvar Alterações</div>
+    <div class="btn-danger">Excluir conta</div>
+    <div style="height:8px"></div>
+  </div>
+  <div class="nav">
+    <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-list nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-user nav-icon active" aria-hidden="true"></i>
+  </div>
+</div>

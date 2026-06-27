@@ -1,0 +1,161 @@
+
+<style>
+  .phone { width: 390px; background: #1E1E2E; border-radius: 44px; border: 8px solid #2a2a3e; overflow: hidden; font-family: var(--font-sans); margin: 0 auto; }
+  .status { background: #16162a; padding: 12px 20px 8px; display: flex; justify-content: space-between; }
+  .status span { color: #888; font-size: 11px; }
+  .screen { padding: 20px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .back { color: #6C63FF; font-size: 13px; }
+  .page-title { color: #fff; font-size: 16px; font-weight: 500; }
+  .stats-row { display: flex; gap: 8px; }
+  .stat-card { flex: 1; background: #2a2a42; border-radius: 12px; padding: 12px 8px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 500; }
+  .stat-lbl { color: #888; font-size: 10px; margin-top: 2px; }
+  .section-title { color: #888; font-size: 11px; letter-spacing: 0.5px; }
+  .chart-card { background: #2a2a42; border-radius: 12px; padding: 14px; }
+  .chart-label { color: #fff; font-size: 13px; font-weight: 500; margin-bottom: 12px; }
+  .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 80px; }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+  .bar { width: 100%; border-radius: 4px 4px 0 0; }
+  .bar-day { color: #888; font-size: 10px; }
+  .exercise-item { background: #2a2a42; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+  .ex-icon { width: 32px; height: 32px; border-radius: 8px; background: #6C63FF22; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ex-info { flex: 1; }
+  .ex-name { color: #fff; font-size: 13px; font-weight: 500; }
+  .ex-sub { color: #888; font-size: 10px; margin-top: 2px; }
+  .ex-badge { color: #00D4AA; font-size: 12px; font-weight: 500; }
+  .nav { background: #16162a; border-top: 1px solid #2a2a3e; padding: 10px 0 14px; display: flex; justify-content: space-around; margin-top: 16px; }
+  .nav-icon { color: #555; font-size: 22px; }
+  .nav-icon.active { color: #6C63FF; }
+  .progress-row { display: flex; flex-direction: column; gap: 8px; }
+  .prog-item { display: flex; flex-direction: column; gap: 4px; }
+  .prog-header { display: flex; justify-content: space-between; }
+  .prog-name { color: #fff; font-size: 12px; }
+  .prog-val { color: #00D4AA; font-size: 12px; font-weight: 500; }
+  .prog-bar-bg { background: #1E1E2E; border-radius: 99px; height: 6px; }
+  .prog-bar-fill { height: 6px; border-radius: 99px; }
+</style>
+
+<div class="phone">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="screen">
+
+    <div class="top-bar">
+      <span class="back" style="color:#6C63FF;font-size:13px"><i class="ti ti-arrow-left" style="font-size:14px;vertical-align:-2px" aria-hidden="true"></i> Voltar</span>
+      <span class="page-title">Meu Progresso</span>
+      <span style="width:48px"></span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" style="color:#6C63FF">4</div>
+        <div class="stat-lbl">Treinos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color:#00D4AA">4</div>
+        <div class="stat-lbl">Exercícios</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color:#E24B4A">330kg</div>
+        <div class="stat-lbl">Carga total</div>
+      </div>
+    </div>
+
+    <div class="section-title">TREINOS POR SEMANA</div>
+
+    <div class="chart-card">
+      <div class="chart-label">Frequência semanal</div>
+      <div class="chart-bars">
+        <div class="bar-wrap">
+          <div class="bar" style="height:30%;background:#6C63FF55"></div>
+          <div class="bar-day">Seg</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:80%;background:#6C63FF"></div>
+          <div class="bar-day">Ter</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:20%;background:#6C63FF55"></div>
+          <div class="bar-day">Qua</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:100%;background:#6C63FF"></div>
+          <div class="bar-day">Qui</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:55%;background:#6C63FF88"></div>
+          <div class="bar-day">Sex</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:40%;background:#6C63FF55"></div>
+          <div class="bar-day">Sáb</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" style="height:10%;background:#6C63FF33"></div>
+          <div class="bar-day">Dom</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">CARGA POR EXERCÍCIO</div>
+
+    <div class="progress-row">
+      <div class="prog-item">
+        <div class="prog-header">
+          <span class="prog-name">Supino Reto</span>
+          <span class="prog-val">80kg</span>
+        </div>
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width:80%;background:#6C63FF"></div>
+        </div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header">
+          <span class="prog-name">Agachamento</span>
+          <span class="prog-val">100kg</span>
+        </div>
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width:100%;background:#00D4AA"></div>
+        </div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header">
+          <span class="prog-name">Remada Curvada</span>
+          <span class="prog-val">70kg</span>
+        </div>
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width:70%;background:#6C63FF"></div>
+        </div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header">
+          <span class="prog-name">Cruxifixo</span>
+          <span class="prog-val">80kg</span>
+        </div>
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width:80%;background:#6C63FF"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">ÚLTIMO TREINO</div>
+
+    <div class="exercise-item">
+      <div class="ex-icon">
+        <i class="ti ti-barbell" style="color:#6C63FF;font-size:16px" aria-hidden="true"></i>
+      </div>
+      <div class="ex-info">
+        <div class="ex-name">Cruxifixo</div>
+        <div class="ex-sub">3x10 · 80kg · 01/09/2026</div>
+      </div>
+      <span class="ex-badge">+5kg</span>
+    </div>
+
+    <div style="height:8px"></div>
+  </div>
+  <div class="nav">
+    <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-list nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-user nav-icon active" aria-hidden="true"></i>
+  </div>
+</div>

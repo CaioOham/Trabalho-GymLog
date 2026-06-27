@@ -1,0 +1,123 @@
+
+<style>
+  .phone {
+    width: 390px;
+    background: #1E1E2E;
+    border-radius: 44px;
+    border: 8px solid #2a2a3e;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    margin: 0 auto;
+  }
+  .status { background: #16162a; padding: 12px 20px 8px; display: flex; justify-content: space-between; }
+  .status span { color: #888; font-size: 11px; }
+  .screen { padding: 20px 16px 0; display: flex; flex-direction: column; gap: 12px; min-height: 720px; }
+  .avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 0 4px; }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; background: #6C63FF33; border: 2px solid #6C63FF; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #6C63FF; font-weight: 500; }
+  .user-name { color: #fff; font-size: 18px; font-weight: 500; }
+  .user-sub { color: #888; font-size: 12px; }
+  .stats-row { display: flex; gap: 10px; }
+  .stat-card { flex: 1; background: #2a2a42; border-radius: 12px; padding: 12px 8px; text-align: center; }
+  .stat-val { color: #00D4AA; font-size: 20px; font-weight: 500; }
+  .stat-lbl { color: #888; font-size: 10px; margin-top: 2px; }
+  .section-title { color: #888; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .menu-item { background: #2a2a42; border-radius: 10px; padding: 13px 14px; display: flex; align-items: center; gap: 12px; }
+  .menu-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .menu-text { flex: 1; }
+  .menu-label { color: #fff; font-size: 13px; }
+  .menu-sub { color: #888; font-size: 10px; margin-top: 1px; }
+  .menu-arrow { color: #555; font-size: 14px; }
+  .btn-logout { background: transparent; border: 1px solid #E24B4A; border-radius: 10px; padding: 13px; text-align: center; color: #E24B4A; font-size: 13px; margin-top: 4px; }
+  .nav { background: #16162a; border-top: 1px solid #2a2a3e; padding: 10px 0 14px; display: flex; justify-content: space-around; }
+  .nav-icon { color: #555; font-size: 22px; }
+  .nav-icon.active { color: #6C63FF; }
+  .badge { background: #6C63FF22; color: #a09bff; font-size: 10px; padding: 2px 8px; border-radius: 99px; }
+</style>
+
+<div class="phone">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="screen">
+
+    <div class="avatar-wrap">
+      <div class="avatar">JS</div>
+      <div class="user-name">João Silva</div>
+      <div class="user-sub">Membro desde junho de 2025</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">Treinos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">Exercícios</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">320kg</div>
+        <div class="stat-lbl">Carga total</div>
+      </div>
+    </div>
+
+    <div class="section-title">CONTA</div>
+
+    <div class="menu-item">
+      <div class="menu-icon" style="background:#6C63FF22">
+        <i class="ti ti-user" style="color:#6C63FF" aria-hidden="true"></i>
+      </div>
+      <div class="menu-text">
+        <div class="menu-label">Editar perfil</div>
+        <div class="menu-sub">Nome e informações pessoais</div>
+      </div>
+      <i class="ti ti-chevron-right menu-arrow" aria-hidden="true"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-icon" style="background:#00D4AA22">
+        <i class="ti ti-chart-bar" style="color:#00D4AA" aria-hidden="true"></i>
+      </div>
+      <div class="menu-text">
+        <div class="menu-label">Meu progresso</div>
+        <div class="menu-sub">Histórico e evolução</div>
+      </div>
+      <i class="ti ti-chevron-right menu-arrow" aria-hidden="true"></i>
+    </div>
+
+    <div class="section-title">PREFERÊNCIAS</div>
+
+    <div class="menu-item">
+      <div class="menu-icon" style="background:#6C63FF22">
+        <i class="ti ti-bell" style="color:#6C63FF" aria-hidden="true"></i>
+      </div>
+      <div class="menu-text">
+        <div class="menu-label">Notificações</div>
+        <div class="menu-sub">Lembretes de treino</div>
+      </div>
+      <span class="badge">Ativo</span>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-icon" style="background:#2a2a42; border: 1px solid #3a3a5c">
+        <i class="ti ti-moon" style="color:#888" aria-hidden="true"></i>
+      </div>
+      <div class="menu-text">
+        <div class="menu-label">Tema</div>
+        <div class="menu-sub">Dark mode ativado</div>
+      </div>
+      <i class="ti ti-chevron-right menu-arrow" aria-hidden="true"></i>
+    </div>
+
+    <div class="btn-logout">
+      <i class="ti ti-logout" style="font-size:14px; margin-right:6px; vertical-align:-2px" aria-hidden="true"></i>
+      Sair da conta
+    </div>
+
+    <div style="height:8px"></div>
+  </div>
+
+  <div class="nav">
+    <i class="ti ti-home nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-list nav-icon" aria-hidden="true"></i>
+    <i class="ti ti-user nav-icon active" aria-hidden="true"></i>
+  </div>
+</div>
