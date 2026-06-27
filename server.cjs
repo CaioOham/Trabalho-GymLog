@@ -8,14 +8,14 @@ const PORT = process.env.PORT || 3001;
 
 // Configuração do CORS para permitir requisições do frontend Vite
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
   credentials: true
 }));
 
 app.use(express.json());
 
 // Inicialização do Banco de Dados SQLite
-const dbPath = path.join(__dirname, 'database.sqlite');
+const dbPath = process.env.DATABASE_PATH || path.join(__dirname, 'database.sqlite');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Erro ao conectar ao banco de dados SQLite:', err.message);
